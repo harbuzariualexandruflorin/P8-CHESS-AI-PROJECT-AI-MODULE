@@ -1,6 +1,6 @@
+from pip._internal import get_installed_distributions as get_installed_packages
 from pip._internal import main as pipmain
 from main.ai_utils import get_logger
-from importlib import util
 import os
 
 
@@ -22,11 +22,6 @@ def get_necessary_packages(file_name):
     return lines
 
 
-def is_package_installed(package):
-    installed = util.find_spec(package)
-    return installed is not None
-
-
 def install_packages(packages):
     for package in packages:
         try:
@@ -37,5 +32,7 @@ def install_packages(packages):
 
 def check_necessary_packages():
     packages = get_necessary_packages('dependencies.txt')
-    packages_to_install = list(dict.fromkeys([package for package in packages if not is_package_installed(package)]))
+    installed_packages = [package.project_name.lower() for package in get_installed_packages()]
+
+    packages_to_install = list(dict.fromkeys([package for package in packages if package not in installed_packages]))
     install_packages(packages_to_install)
