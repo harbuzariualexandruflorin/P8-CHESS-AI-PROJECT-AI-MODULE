@@ -1,18 +1,23 @@
-from flask_restful import Api
-from webapi.controllers import *
 from main.ai_utils import get_logger
+from typeguard import typechecked
+from webapi.controllers import *
+from flask_restful import Api
+from logging import Logger
 
 
-def logger():
+@typechecked
+def logger() -> Logger:
     return get_logger(__name__)
 
 
-def set_api_resources():
+@typechecked
+def set_api_resources() -> None:
     api = Api(app)
     api.add_resource(ChessController, '/chess/<id>')
 
 
-def start_api(use_port):
+@typechecked
+def start_api(use_port: str) -> None:
     set_api_resources()
 
     try:
