@@ -1,6 +1,6 @@
 from pip._internal import get_installed_distributions as get_installed_packages
 from pip._internal import main as pipmain
-from main.ai_utils import get_logger
+from utils.ai_utils import get_logger
 from typeguard import typechecked
 from logging import Logger
 from typing import List

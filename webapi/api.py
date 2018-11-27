@@ -1,4 +1,4 @@
-from main.ai_utils import get_logger
+from utils.ai_utils import get_logger
 from typeguard import typechecked
 from webapi.controllers import *
 from flask_restful import Api
