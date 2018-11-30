@@ -2,10 +2,7 @@ import logging
 import os
 from datetime import datetime
 
-from typeguard import typechecked
 
-
-@typechecked
 def get_logger(name: str) -> logging.Logger:
     log_file_name = "logfile_" + datetime.now().strftime("%d_%m_%Y.txt")
     log_directory = os.path.join("../logs", log_file_name)

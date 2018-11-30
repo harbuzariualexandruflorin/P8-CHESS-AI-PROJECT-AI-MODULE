@@ -1,18 +1,15 @@
 from pip._internal import get_installed_distributions as get_installed_packages
 from pip._internal import main as pipmain
 from utils.ai_utils import get_logger
-from typeguard import typechecked
 from logging import Logger
 from typing import List
 import os
 
 
-@typechecked
 def logger() -> Logger:
     return get_logger(__name__)
 
 
-@typechecked
 def get_necessary_packages(file_name: str) -> List[str]:
     location = os.path.realpath(os.path.join(".", os.path.dirname(__file__)))
     lines = []
@@ -27,7 +24,6 @@ def get_necessary_packages(file_name: str) -> List[str]:
     return lines
 
 
-@typechecked
 def install_packages(packages: List[str]) -> None:
     for package in packages:
         try:
@@ -36,7 +32,6 @@ def install_packages(packages: List[str]) -> None:
             logger().exception("Failed to install package %s", package)
 
 
-@typechecked
 def check_necessary_packages() -> None:
     packages = get_necessary_packages('dependencies.txt')
     installed_packages = [package.project_name.lower() for package in get_installed_packages()]
