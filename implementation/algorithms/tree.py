@@ -3,10 +3,12 @@ class TreeNode:
     def __init__(self,
                  parent = None,
                  value = None,
-                 children = None):
+                 children = None,
+                 board = None):
 
         self.parent = parent
         self.value = value
+        self.board = board
 
         if isinstance(children, dict):
             self.children = children
