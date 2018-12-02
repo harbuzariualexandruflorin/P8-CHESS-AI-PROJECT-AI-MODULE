@@ -44,11 +44,11 @@ def construct_current_state(board, move_list):
     return board
 
 
-
+"""
 move_list=["g1h3"]
 print(tree_gen(move_list, 1))
 
-
+"""
 """
 board = chess.Board()
 
