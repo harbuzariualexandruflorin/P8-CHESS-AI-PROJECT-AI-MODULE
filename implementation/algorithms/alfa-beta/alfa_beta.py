@@ -45,6 +45,7 @@ def alpha_beta_recursive(node, alpha, beta, maximizing_player):
         return min_eval
 
 
+"""
 if __name__=='__main__':
     root = tree.TreeNode()
     root.children['move_1'] = tree.TreeNode(parent=root)
@@ -67,3 +68,4 @@ if __name__=='__main__':
     #print(root.children)
     #print(root.children['move_1'].children)
     print(alpha_beta(root))
+"""
