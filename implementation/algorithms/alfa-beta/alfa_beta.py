@@ -1,13 +1,15 @@
 import implementation.algorithms.tree.tree as tree
 
 #typecheck this
-def alpha_beta(root,turns_predicted):
+def alpha_beta(root):
     alpha = -1
     beta = 1
     result_node = alpha_beta_recursive(root, alpha, beta, True)
     parent_node = result_node
-    for i in range(0, turns_predicted*2-2):
+    parent_test = parent_node.parent
+    while parent_test.parent:
         parent_node = parent_node.parent
+        parent_test=parent_test.parent
     for key, value in root.children.items():
         if root.children[key] == parent_node:
             return key
@@ -43,7 +45,6 @@ def alpha_beta_recursive(node, alpha, beta, maximizing_player):
         return min_eval
 
 
-"""
 if __name__=='__main__':
     root = tree.TreeNode()
     root.children['move_1'] = tree.TreeNode(parent=root)
@@ -65,5 +66,4 @@ if __name__=='__main__':
     #print(root)
     #print(root.children)
     #print(root.children['move_1'].children)
-    print(alpha_beta(root,2))
-"""
+    print(alpha_beta(root))
