@@ -53,7 +53,7 @@ def play() -> None :
     board = chess.Board()
     n = 0
     print(board)
-    while not board.is_checkmate() and not board.is_seventyfive_moves() and not board.is_stalemate() :
+    while not board.is_game_over() :
         if n % 2 == 0 :
             move = min_max_root(1, board, True)
             print("You'are advised to do this move",move)
