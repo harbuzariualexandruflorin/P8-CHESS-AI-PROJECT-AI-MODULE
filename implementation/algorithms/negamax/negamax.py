@@ -29,7 +29,7 @@ def negamax(depth : int, board : chess.Board, move : chess.Move) -> float:
     if depth == 0 :
         return evaluate_board_state(board, str(move))
     possible_moves = board.legal_moves
-    best_move = -9999999
+    best_move = -1
     for possible_move in possible_moves :
         move = chess.Move.from_uci(str(possible_move))
         board.push(move)
