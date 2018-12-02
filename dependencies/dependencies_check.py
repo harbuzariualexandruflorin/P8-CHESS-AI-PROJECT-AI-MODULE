@@ -1,14 +1,16 @@
 from pip._internal import get_installed_distributions as get_installed_packages
 from pip._internal import main as pipmain
-from main.ai_utils import get_logger
+from utils.ai_utils import get_logger
+from logging import Logger
+from typing import List
 import os
 
 
-def logger():
+def logger() -> Logger:
     return get_logger(__name__)
 
 
-def get_necessary_packages(file_name):
+def get_necessary_packages(file_name: str) -> List[str]:
     location = os.path.realpath(os.path.join(".", os.path.dirname(__file__)))
     lines = []
     try:
@@ -22,7 +24,7 @@ def get_necessary_packages(file_name):
     return lines
 
 
-def install_packages(packages):
+def install_packages(packages: List[str]) -> None:
     for package in packages:
         try:
             pipmain(['install', package])
@@ -30,7 +32,7 @@ def install_packages(packages):
             logger().exception("Failed to install package %s", package)
 
 
-def check_necessary_packages():
+def check_necessary_packages() -> None:
     packages = get_necessary_packages('dependencies.txt')
     installed_packages = [package.project_name.lower() for package in get_installed_packages()]
 
