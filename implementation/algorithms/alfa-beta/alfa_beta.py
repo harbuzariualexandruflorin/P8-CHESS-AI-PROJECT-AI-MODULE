@@ -1,22 +1,24 @@
 import implementation.algorithms.tree.tree as tree
 
-#typecheck this
-def alpha_beta(root):
+from typing import *
+from typeguard import typechecked
+
+@typechecked
+def alpha_beta(root: tree.TreeNode) -> str:
     alpha = -1
     beta = 1
-    result_node = alpha_beta_recursive(root, alpha, beta, True)
-    parent_node = result_node
+    parent_node = alpha_beta_recursive(root, alpha, beta, True)
     parent_test = parent_node.parent
     while parent_test.parent:
         parent_node = parent_node.parent
-        parent_test=parent_test.parent
+        parent_test = parent_test.parent
     for key, value in root.children.items():
         if root.children[key] == parent_node:
             return key
 
 
-#typecheck this too
-def alpha_beta_recursive(node, alpha, beta, maximizing_player):
+@typechecked
+def alpha_beta_recursive(node: tree.TreeNode, alpha: float, beta: float, maximizing_player: bool) -> tree.TreeNode:
     if not node.children:
         return node
 
@@ -45,7 +47,6 @@ def alpha_beta_recursive(node, alpha, beta, maximizing_player):
         return min_eval
 
 
-"""
 if __name__=='__main__':
     root = tree.TreeNode()
     root.children['move_1'] = tree.TreeNode(parent=root)
@@ -68,4 +69,3 @@ if __name__=='__main__':
     #print(root.children)
     #print(root.children['move_1'].children)
     print(alpha_beta(root))
-"""
