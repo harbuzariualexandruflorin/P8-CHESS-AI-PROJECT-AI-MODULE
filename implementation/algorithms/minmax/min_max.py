@@ -3,11 +3,13 @@ import implementation.algorithms.tree.tree as tree
 from typeguard import typechecked
 
 @typechecked
-def min_max(root : tree.TreeNode ,turns_predicted : int) -> str:
+def min_max(root : tree.TreeNode) -> str:
     result_node = min_max_recursive(root, True)
     parent_node = result_node
-    for i in range(0, turns_predicted*2-2):
+    parent_test = parent_node.parent
+    while parent_test.parent:
         parent_node = parent_node.parent
+        parent_test=parent_test.parent
     for key, value in root.children.items():
         if root.children[key] == parent_node:
             return key
@@ -60,4 +62,4 @@ if __name__=='__main__':
     #print(root)
     #print(root.children)
     #print(root.children['move_1'].children)
-    print(min_max(root,2))
+    print(min_max(root))
