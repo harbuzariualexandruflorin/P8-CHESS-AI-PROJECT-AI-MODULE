@@ -3,10 +3,12 @@ import chess
 import implementation.algorithms.tree.tree as tree_node
 import utils.chess_utils as evaluation
 
+from typing import *
+from typeguard import typechecked
+
 
 #typecheck this
 def tree_gen(move_list, predicted_turns):
-    #global history
     max_predicted_moves = predicted_turns*2
     board = chess.Board()
     beginning_state = construct_current_state(board, move_list).copy()
@@ -16,6 +18,7 @@ def tree_gen(move_list, predicted_turns):
         root.children[str(move)] = tree_node.TreeNode(parent=root,value=evalued_value)
         tree_generation_recursive(1, root.children[str(move)], beginning_state.copy(), max_predicted_moves)
     return root
+
 
 #typecheck me
 def tree_generation_recursive(current_predicted_moves, current_node, beginning_state, max_predicted_moves):
@@ -44,19 +47,17 @@ def construct_current_state(board, move_list):
     return board
 
 
-"""
-move_list=["g1h3"]
-print(tree_gen(move_list, 1))
-
-"""
-"""
-board = chess.Board()
+if __name__ == '__main__':
+    move_list=["g1h3"]
+    print(tree_gen(move_list, 1))
 
 
-for move in board.legal_moves:
-    board_copy=board.copy()
-    board_copy.push(move)
-    print(board_copy)
+    board = chess.Board()
 
 
-"""
+    for move in board.legal_moves:
+        board_copy=board.copy()
+        board_copy.push(move)
+        print(board_copy)
+
+
