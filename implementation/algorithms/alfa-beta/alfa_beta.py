@@ -1,4 +1,4 @@
-import implementation.algorithms.tree as tree
+import implementation.algorithms.tree.tree as tree
 
 #typecheck this
 def alpha_beta(root,turns_predicted):

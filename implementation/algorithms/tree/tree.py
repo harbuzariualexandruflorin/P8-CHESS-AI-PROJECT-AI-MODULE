@@ -1,4 +1,3 @@
-
 class TreeNode:
     def __init__(self,
                  parent = None,
