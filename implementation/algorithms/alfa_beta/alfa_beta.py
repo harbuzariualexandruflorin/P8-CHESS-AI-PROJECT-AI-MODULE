@@ -6,44 +6,60 @@ from typeguard import typechecked
 @typechecked
 def alpha_beta(root: tree.TreeNode) -> str:
     alpha = -1
-    beta = 1
+    beta  = 1
+
     parent_node = alpha_beta_recursive(root, alpha, beta, True)
     parent_test = parent_node.parent
+
     while parent_test.parent:
         parent_node = parent_node.parent
         parent_test = parent_test.parent
+
     for key, value in root.children.items():
         if root.children[key] == parent_node:
             return key
 
 
 @typechecked
-def alpha_beta_recursive(node: tree.TreeNode, alpha: float, beta: float, maximizing_player: bool) -> tree.TreeNode:
+def alpha_beta_recursive(node: tree.TreeNode,
+                         alpha: float,
+                         beta: float,
+                         maximizing_player: bool) -> tree.TreeNode:
     if not node.children:
         return node
 
     if maximizing_player:
         max_eval = tree.TreeNode(value=-1)
+
         for key, value in node.children.items():
             eval_node = alpha_beta_recursive(node.children[key], alpha, beta, False)
-            eval = eval_node.value
+            eval      = eval_node.value
+
             if max(max_eval.value, eval) != max_eval.value:
                 max_eval = eval_node
+
             alpha = max(alpha, eval)
+
             if beta <= alpha:
                 break
+
         return max_eval
 
     else:
         min_eval = tree.TreeNode(value=1)
+
         for key, value in node.children.items():
             eval_node = alpha_beta_recursive(node.children[key], alpha, beta, True)
-            eval = eval_node.value
+            eval      = eval_node.value
+
             if min(min_eval.value, eval) != min_eval.value:
                 min_eval = eval_node
+
             beta = min(beta, eval)
+
             if beta <= alpha:
                 break
+
         return min_eval
 
 
