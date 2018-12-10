@@ -13,8 +13,7 @@ def logger() -> Logger:
 @typechecked
 def set_api_resources() -> None:
     api = Api(app)
-    api.add_resource(ChessController, '/chess/<id>')
-
+    api.add_resource(ChessController, '/chess/analysis')
 
 @typechecked
 def start_api(use_port: str) -> None:

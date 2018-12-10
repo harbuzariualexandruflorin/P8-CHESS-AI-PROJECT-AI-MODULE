@@ -81,6 +81,32 @@ def evaluate_board_attack_score(board: chess.Board) -> (float, float):
 
 
 @typechecked
+def get_board_piece_take_total_value(board: chess.Board) -> float:
+    total_value = 0
+    for move in board.legal_moves:
+        board.push_uci(str(move))
+        total_value += evaluate_game_state(board, True)
+        board.pop()
+
+        if board.is_capture(move):
+            piece = board.piece_at(Macros.UCI_TO_SQUARE[str(move)[2:4]])
+            if piece is not None:
+                total_value += Macros.PIECE_VALUES[piece.piece_type] / Macros.BOARD_INTERVAL_FIX
+
+    return total_value
+
+
+@typechecked
+def evaluate_board_piece_take_score(board: chess.Board) -> (float, float):
+    opponent = get_board_piece_take_total_value(board)
+    board.turn = not board.turn
+    player = get_board_piece_take_total_value(board)
+    board.turn = not board.turn
+
+    return player, opponent
+
+
+@typechecked
 def evaluate_board_state(board: chess.Board, move: str) -> float:
     board.push_uci(move)
 
@@ -91,9 +117,11 @@ def evaluate_board_state(board: chess.Board, move: str) -> float:
 
     player_piece_score, opponent_piece_score = evaluate_board_piece_score(board)
     player_attack_score, opponent_attack_score = evaluate_board_attack_score(board)
+    player_piece_take_score, opponent_piece_take_score = evaluate_board_piece_take_score(board)
 
     board.pop()
     board_state_value += (player_piece_score - opponent_piece_score) + (player_attack_score - opponent_attack_score)
+    board_state_value += (player_piece_take_score - opponent_piece_take_score)
 
     if board_state_value > 1:
         return Macros.BOARD_POSSIBLE_CHECKMATE_VALUE
