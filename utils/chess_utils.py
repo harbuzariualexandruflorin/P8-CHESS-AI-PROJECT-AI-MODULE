@@ -1,40 +1,7 @@
-from typing import List, Callable
-
 import chess
 from typeguard import typechecked
 
 from utils.macros import Macros
-
-
-@typechecked
-def get_board_pieces(board: chess.Board) -> List[chess.Piece]:
-    piece_positions = []
-    for square in chess.SQUARES:
-        piece = board.piece_at(square)
-        if piece is not None:
-            piece_positions.append(piece)
-    return piece_positions
-
-
-@typechecked
-def get_board_pieces_total_value(board_pieces: List[chess.Piece], check_color: Callable) -> float:
-    total_value = 0
-
-    for piece in board_pieces:
-        if check_color(piece.color):
-            total_value += Macros.PIECE_VALUES[piece.piece_type] / Macros.BOARD_INTERVAL_FIX
-
-    return total_value
-
-
-@typechecked
-def evaluate_board_piece_score(board: chess.Board) -> (float, float):
-    board_pieces = sorted(get_board_pieces(board), key=lambda piece: piece.piece_type)
-
-    opponent = get_board_pieces_total_value(board_pieces, lambda color: color == board.turn)
-    player = get_board_pieces_total_value(board_pieces, lambda color: color != board.turn)
-
-    return player, opponent
 
 
 @typechecked
@@ -55,29 +22,45 @@ def evaluate_game_state(board: chess.Board, possible: bool) -> float:
 
 
 @typechecked
+def evaluate_board_piece_score(board: chess.Board, player_color: bool) -> (float, float, float):
+    opponent, player = 0, 0
+    for square in chess.SQUARES:
+        piece = board.piece_at(square)
+        if piece is not None:
+            if piece.color == player_color:
+                player += Macros.PIECE_VALUES[piece.piece_type] / Macros.BOARD_INTERVAL_FIX
+            else:
+                opponent += Macros.PIECE_VALUES[piece.piece_type] / Macros.BOARD_INTERVAL_FIX
+
+    return player - opponent, player, opponent
+
+
+@typechecked
 def get_board_attack_total_value(board: chess.Board) -> float:
     total_value = 0
+
     for move in board.legal_moves:
+        captured_piece = board.is_capture(move)
+        score_before = evaluate_board_piece_score(board, not board.turn)[1] if captured_piece else 0
+
         board.push_uci(str(move))
+        if captured_piece:
+            total_value += score_before - evaluate_board_piece_score(board, board.turn)[1]
+
         total_value += evaluate_game_state(board, True)
         board.pop()
-
-        if board.is_capture(move):
-            piece = board.piece_at(Macros.UCI_TO_SQUARE[str(move)[2:4]])
-            if piece is not None:
-                total_value += Macros.PIECE_VALUES[piece.piece_type] / Macros.BOARD_INTERVAL_FIX
 
     return total_value
 
 
 @typechecked
-def evaluate_board_attack_score(board: chess.Board) -> (float, float):
+def evaluate_board_attack_score(board: chess.Board) -> (float, float, float):
     opponent = get_board_attack_total_value(board)
     board.turn = not board.turn
     player = get_board_attack_total_value(board)
     board.turn = not board.turn
 
-    return player, opponent
+    return player - opponent, player, opponent
 
 
 @typechecked
@@ -115,16 +98,16 @@ def evaluate_board_state(board: chess.Board, move: str) -> float:
         board.pop()
         return board_state_value
 
-    player_piece_score, opponent_piece_score = evaluate_board_piece_score(board)
-    player_attack_score, opponent_attack_score = evaluate_board_attack_score(board)
-    player_piece_take_score, opponent_piece_take_score = evaluate_board_piece_take_score(board)
 
+    piece_scores = evaluate_board_piece_score(board, not board.turn)
+    board_state_value += piece_scores[0]
+
+    attack_scores = evaluate_board_attack_score(board)
+    board_state_value += attack_scores[0]
     board.pop()
-    board_state_value += (player_piece_score - opponent_piece_score) + (player_attack_score - opponent_attack_score)
-    board_state_value += (player_piece_take_score - opponent_piece_take_score)
 
-    if board_state_value > 1:
+    if board_state_value > Macros.BOARD_CHECKMATE_VALUE:
         return Macros.BOARD_POSSIBLE_CHECKMATE_VALUE
-    elif board_state_value < -1:
+    elif board_state_value < -Macros.BOARD_CHECKMATE_VALUE:
         return -Macros.BOARD_POSSIBLE_CHECKMATE_VALUE
     return board_state_value
