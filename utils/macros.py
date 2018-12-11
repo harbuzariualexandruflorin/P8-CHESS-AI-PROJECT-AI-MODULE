@@ -1,5 +1,5 @@
-import chess
 
+import chess
 
 class MetaConst(type):
     def __getattr__(self, item):
@@ -49,3 +49,4 @@ class Macros(Const):
 
     UCI_TO_SQUARE = dict(zip(chess.SQUARE_NAMES, chess.SQUARES))
     BOARD_SIZE: int = 8
+
