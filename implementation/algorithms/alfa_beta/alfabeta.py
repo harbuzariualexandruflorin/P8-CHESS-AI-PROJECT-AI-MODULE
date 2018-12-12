@@ -1,8 +1,9 @@
 import chess
 
-from utils.chess_utils import evaluate_board_state
-
 from typeguard import typechecked
+
+import utils.chess_utils as chess_functions
+
 
 @typechecked
 def alpha_beta_root(depth : int, board : chess.Board, is_maximizing : bool) -> chess.Move :
@@ -21,9 +22,9 @@ def alpha_beta_root(depth : int, board : chess.Board, is_maximizing : bool) -> c
     return best_move_final
 
 @typechecked
-def alpha_beta(depth : int, board : chess.Board, alpha : int, beta : int, is_maximizing : bool, move : chess.Move) -> float:
+def alpha_beta(depth : int, board : chess.Board, alpha : float, beta : float, is_maximizing : bool, move : chess.Move) -> float:
     if depth == 0 :
-        return -evaluate_board_state(board, str(move))
+        return -chess_functions.evaluate_board_state(board, str(move),[chess_functions.DEFEND_PIECES_STRATEGY])
     possible_moves = board.legal_moves
     if is_maximizing :
         best_move = -1
@@ -57,14 +58,14 @@ def play() -> None :
     print(board)
     while not board.is_game_over() :
         if n % 2 == 0 :
-            move = alpha_beta_root(1, board, True)
+            move = alpha_beta_root(2, board, True)
             print("You'are advised to do this move",move)
             move = input("Enter move:")
             move = chess.Move.from_uci(str(move))
             board.push(move)
         else:
             print("Computers Turn:")
-            move = alpha_beta_root(1, board, True)
+            move = alpha_beta_root(2, board, True)
             move = chess.Move.from_uci(str(move))
             board.push(move)
         print(board)
