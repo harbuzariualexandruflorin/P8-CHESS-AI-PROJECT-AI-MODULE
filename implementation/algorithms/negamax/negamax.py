@@ -1,11 +1,11 @@
 import chess
 
-from utils.chess_utils import evaluate_board_state
+import  utils.chess_utils as evaluation
 
 from typeguard import typechecked
 
 @typechecked
-def negamax_root(depth : int, board : chess.Board) -> chess.Move :
+def negamax_root(depth : int, board : chess.Board) -> (chess.Move,) :
     possible_moves = board.legal_moves
     first_best = -1
     second_best = -1
@@ -22,12 +22,12 @@ def negamax_root(depth : int, board : chess.Board) -> chess.Move :
             second_best = first_best
             first_best = value
             best_move_final = move
-    return best_move_final
+    return (best_move_final,first_best)
 
 @typechecked
 def negamax(depth : int, board : chess.Board, move : chess.Move) -> float:
     if depth == 0 :
-        return evaluate_board_state(board, str(move))
+        return evaluation.evaluate_board_state(board, str(move),[evaluation.TAKE_PIECES_STRATEGY])
     possible_moves = board.legal_moves
     best_move = -1
     for possible_move in possible_moves :
@@ -45,14 +45,14 @@ def play() -> None :
     print(board)
     while not board.is_checkmate() and not board.is_seventyfive_moves() and not board.is_stalemate() :
         if n % 2 == 0 :
-            move = negamax_root(1, board)
+            move,value = negamax_root(1, board)
             print("You'are advised to do this move",move)
             move = input("Enter move:")
             move = chess.Move.from_uci(str(move))
             board.push(move)
         else:
             print("Computers Turn:")
-            move = negamax_root(1, board)
+            move,value = negamax_root(1, board)
             move = chess.Move.from_uci(str(move))
             board.push(move)
         print(board)
