@@ -6,7 +6,7 @@ from dependencies.dependencies_check import check_necessary_packages
 
 check_necessary_packages()
 
-from utils.chess_utils import evaluate_board_state
+import utils.chess_utils as chess_functions
 from typeguard import typechecked
 from webapi.api import start_api
 from utils.macros import Macros
@@ -21,8 +21,9 @@ if __name__ == '__main__':
     # main()
 
     board = chess.Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
-    # print(board)
-    # print("==============================================")
+
+    print(board)
+    print("==============================================")
 
     print([str(x) for x in board.legal_moves])
 
@@ -33,7 +34,13 @@ if __name__ == '__main__':
             print("TURN -> BLACK")
 
         move = random.choice([str(x) for x in board.legal_moves])
-        val = evaluate_board_state(board, move)
+        val = chess_functions.evaluate_board_state(board, move, [
+            chess_functions.PAWN_ADVANCE_STRATEGY,
+            chess_functions.KEEP_PIECES_STRATEGY,
+            chess_functions.ATTACK_PIECES_STRATEGY,
+            chess_functions.DEFEND_PIECES_STRATEGY,
+            chess_functions.TAKE_PIECES_STRATEGY
+        ])
 
         board.push_uci(move)
         print(board)
