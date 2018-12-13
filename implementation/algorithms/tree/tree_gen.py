@@ -36,7 +36,7 @@ def tree_generation_recursive(current_predicted_moves, current_node, beginning_s
         current_state = construct_current_state(beginning_state, move_list).copy()
 
         for move in current_state.generate_legal_moves():
-            evalued_value = evaluation.evaluate_board_state(current_state, str(move))
+            evalued_value = evaluation.evaluate_board_state(current_state, str(move),[evaluation.PAWN_ADVANCE_STRATEGY])
             current_node.children[str(move)] = tree_node.TreeNode(parent=current_node, value=evalued_value)
             tree_generation_recursive(current_predicted_moves + 1, current_node.children[str(move)],
                                       beginning_state.copy(), max_predicted_moves)
@@ -115,15 +115,15 @@ def mistake_checker(move_list, player_color, mistake_threshold):
         board_copy = board.copy()
 
         made_move_1 = move_list[0]
-        made_move_value_1 = evaluation.evaluate_board_state(board_copy.copy(), move_list[0])
+        made_move_value_1 = evaluation.evaluate_board_state(board_copy.copy(), move_list[0],[evaluation.PAWN_ADVANCE_STRATEGY])
         board_copy = construct_current_state1(board_copy.copy(), move_list[:1])
         made_move_2 = move_list[1]
-        made_move_value_2 = evaluation.evaluate_board_state(board_copy.copy(), move_list[1])
+        made_move_value_2 = evaluation.evaluate_board_state(board_copy.copy(), move_list[1],[evaluation.PAWN_ADVANCE_STRATEGY])
 
         board_copy = board.copy()
 
         for move in board_copy.legal_moves:
-            current_move_value = evaluation.evaluate_board_state(board_copy.copy(), str(move))
+            current_move_value = evaluation.evaluate_board_state(board_copy.copy(), str(move),[evaluation.PAWN_ADVANCE_STRATEGY])
             current_move = str(move)
             if current_move_value > max_move_value_1:
                 max_move_value_1 = current_move_value
@@ -134,7 +134,7 @@ def mistake_checker(move_list, player_color, mistake_threshold):
         board_copy = construct_current_state1(board.copy(), sample_list)
 
         for move in board_copy.legal_moves:
-            current_move_value = evaluation.evaluate_board_state(board_copy.copy(), str(move))
+            current_move_value = evaluation.evaluate_board_state(board_copy.copy(), str(move),[evaluation.PAWN_ADVANCE_STRATEGY])
             current_move = str(move)
             if current_move_value > max_move_value_2:
                 max_move_value_2 = current_move_value
