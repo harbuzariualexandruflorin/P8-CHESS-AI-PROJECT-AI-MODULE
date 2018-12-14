@@ -5,18 +5,14 @@ import utils.chess_utils as evaluation
 
 import chess
 
-from typing import *
 from typeguard import typechecked
 
 
-
-#only takes like half a fucking minute to run
-
 @typechecked
 def alpha_beta(root: tree.TreeNode) -> str:
-    alpha = -1
-    beta  = 1
-    move_list = list()
+    alpha     = -1
+    beta      = 1
+    move_list = []
 
     parent_node = alpha_beta_recursive(root, alpha, beta, True)
     parent_test = parent_node.parent
@@ -35,7 +31,7 @@ def alpha_beta(root: tree.TreeNode) -> str:
 
     for key, value in root.children.items():
         if root.children[key] == parent_node:
-            string = str(turns_to_end_game) + " " +str(key)
+            string = f'{turns_to_end_game} {key}'
             return string
 
 
@@ -49,18 +45,18 @@ def find_end_game(move_list):
 
     while not board.is_game_over() and turns_to_endgame < 150:
         move_list.clear()
-        max_gain = -1
+        max_gain  = -1
         best_move = ""
 
         for move in board.legal_moves:
             current_gain = evaluation.evaluate_board_state(board, str(move))
             if max_gain <= current_gain:
-                max_gain = current_gain
+                max_gain  = current_gain
                 best_move = str(move)
 
         move_list.insert(0, best_move)
         turns_to_endgame = turns_to_endgame+1
-        current_move = chess.Move.from_uci(best_move)
+        current_move     = chess.Move.from_uci(best_move)
         board.push(current_move)
 
     return turns_to_endgame
