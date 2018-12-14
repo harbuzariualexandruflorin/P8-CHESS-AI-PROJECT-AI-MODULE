@@ -47,3 +47,24 @@ if __name__ == '__main__':
         print(val)
         print(move)
         print("=================================================")
+
+    ##caz 1
+    #multiprocesare
+    """
+    r1 = mutare , scor, minmax, pown.strategi
+    r2 = mutare scor, alpha , defece
+    r3 =mutare scor , nega, attack
+    create json 
+     mutari 
+        :r1
+    mutari 
+     r2
+     mutari r3
+     }}
+     caz 2
+     4 c213
+    '"""
+
+
+
+
