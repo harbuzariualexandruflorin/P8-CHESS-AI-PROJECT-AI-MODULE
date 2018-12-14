@@ -9,10 +9,13 @@ from utils.macros import Macros
 @typechecked
 def get_board_pieces(board: chess.Board) -> List[chess.Piece]:
     piece_positions = []
+
     for square in chess.SQUARES:
         piece = board.piece_at(square)
+
         if piece is not None:
             piece_positions.append(piece)
+
     return piece_positions
 
 
