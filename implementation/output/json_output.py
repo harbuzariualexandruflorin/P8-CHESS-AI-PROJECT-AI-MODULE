@@ -8,6 +8,8 @@ import chess
 
 from implementation.algorithms.minmax.minmax import min_max_root as min_max_algorithm
 
+
+
 @typechecked
 def create_json_main_body(initial_state_FEN : str, variants : list) -> dict :
     return {"initialStateFEN" : initial_state_FEN, "variants" : variants}

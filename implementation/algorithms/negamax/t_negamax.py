@@ -3,8 +3,8 @@ import implementation.algorithms.tree.tree as tree
 from typeguard import typechecked
 
 @typechecked
-def min_max(root : tree.TreeNode) -> str:
-    result_node = min_max_recursive(root, True)
+def t_negamax(root : tree.TreeNode) -> str:
+    result_node = t_negamax_recursive(root, 1)
     parent_node = result_node
     parent_test = parent_node.parent
     while parent_test.parent:
@@ -14,31 +14,17 @@ def min_max(root : tree.TreeNode) -> str:
         if root.children[key] == parent_node:
             return key
 
-
 @typechecked
-def min_max_recursive(node : tree.TreeNode, maximizing_player : bool) -> tree.TreeNode:
+def t_negamax_recursive(node : tree.TreeNode, point_of_view : int) -> tree.TreeNode:
     if not node.children:
         return node
-
-    if maximizing_player:
-        max_eval = tree.TreeNode(value=-1)
-        for key, value in node.children.items():
-            eval_node = min_max_recursive(node.children[key], False)
-            eval = eval_node.value
-            if max(max_eval.value, eval) != max_eval.value:
-                max_eval = eval_node
-        return max_eval
-
-    else:
-        min_eval = tree.TreeNode(value=1)
-        for key, value in node.children.items():
-            eval_node = min_max_recursive(node.children[key], True)
-            eval = eval_node.value
-            if min(min_eval.value, eval) != min_eval.value:
-                min_eval = eval_node
-        return min_eval
-
-
+    max_eval = tree.TreeNode(value=-1)
+    for key, value in node.children.items():
+        eval_node = t_negamax_recursive(node.children[key], -point_of_view)
+        eval = point_of_view*eval_node.value
+        if max(max_eval.value, eval) != max_eval.value:
+            max_eval = eval_node
+    return max_eval
 
 if __name__=='__main__':
 
@@ -62,4 +48,4 @@ if __name__=='__main__':
     #print(root)
     #print(root.children)
     #print(root.children['move_1'].children)
-    print(min_max(root))
+    print(t_negamax(root))
