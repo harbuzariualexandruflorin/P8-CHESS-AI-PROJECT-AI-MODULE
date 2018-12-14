@@ -3,28 +3,32 @@ import implementation.algorithms.tree.tree as tree
 from typeguard import typechecked
 
 @typechecked
-def min_max(root : tree.TreeNode) -> str:
+def min_max(root: tree.TreeNode) -> str:
     result_node = min_max_recursive(root, True)
     parent_node = result_node
     parent_test = parent_node.parent
+
     while parent_test.parent:
         parent_node = parent_node.parent
         parent_test=parent_test.parent
+
     for key, value in root.children.items():
         if root.children[key] == parent_node:
             return key
 
 
 @typechecked
-def min_max_recursive(node : tree.TreeNode, maximizing_player : bool) -> tree.TreeNode:
+def min_max_recursive(node: tree.TreeNode, maximizing_player: bool) -> tree.TreeNode:
     if not node.children:
         return node
 
     if maximizing_player:
         max_eval = tree.TreeNode(value=-1)
+
         for key, value in node.children.items():
             eval_node = min_max_recursive(node.children[key], False)
             eval = eval_node.value
+
             if max(max_eval.value, eval) != max_eval.value:
                 max_eval = eval_node
         return max_eval
@@ -33,7 +37,8 @@ def min_max_recursive(node : tree.TreeNode, maximizing_player : bool) -> tree.Tr
         min_eval = tree.TreeNode(value=1)
         for key, value in node.children.items():
             eval_node = min_max_recursive(node.children[key], True)
-            eval = eval_node.value
+            eval      = eval_node.value
+
             if min(min_eval.value, eval) != min_eval.value:
                 min_eval = eval_node
         return min_eval
