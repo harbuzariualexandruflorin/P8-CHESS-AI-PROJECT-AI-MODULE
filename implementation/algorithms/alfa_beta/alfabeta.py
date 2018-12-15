@@ -6,7 +6,7 @@ import utils.chess_utils as chess_functions
 
 
 @typechecked
-def alpha_beta_root(depth: int, board: chess.Board, is_maximizing: bool) -> chess.Move:
+def alpha_beta_root(depth: int, board: chess.Board, is_maximizing: bool) -> (chess.Move,float):
     possible_moves  = board.legal_moves
     best_move       = -1
     best_move_final = None
