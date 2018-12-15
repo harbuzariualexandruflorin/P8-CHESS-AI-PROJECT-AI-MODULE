@@ -1,11 +1,10 @@
 import chess
 
-from utils.chess_utils import evaluate_board_state
-
+import utils.chess_utils as evaluatin
 from typeguard import typechecked
 
 @typechecked
-def alpha_beta_root(depth : int, board : chess.Board, is_maximizing : bool) -> chess.Move :
+def alpha_beta_root(depth : int, board : chess.Board, is_maximizing : bool) -> (chess.Move,float):
     possible_moves = board.legal_moves
     best_move = -1
     best_move_final = None
@@ -18,12 +17,12 @@ def alpha_beta_root(depth : int, board : chess.Board, is_maximizing : bool) -> c
         if value > best_move :
             best_move = value
             best_move_final = move
-    return best_move_final
+    return best_move_final,value
 
 @typechecked
 def alpha_beta(depth : int, board : chess.Board, alpha : int, beta : int, is_maximizing : bool, move : chess.Move) -> float:
     if depth == 0 :
-        return -evaluate_board_state(board, str(move))
+        return -evaluatin.evaluate_board_state(board, str(move),[evaluatin.DEFEND_PIECES_STRATEGY])
     possible_moves = board.legal_moves
     if is_maximizing :
         best_move = -1

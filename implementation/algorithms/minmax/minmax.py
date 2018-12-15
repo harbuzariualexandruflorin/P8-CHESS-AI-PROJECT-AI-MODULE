@@ -1,11 +1,10 @@
 import chess
 
-from utils.chess_utils import evaluate_board_state
-
+import utils.chess_utils as evaluation
 from typeguard import typechecked
 
 @typechecked
-def min_max_root(depth : int, board : chess.Board, is_maximizing : bool) -> chess.Move :
+def min_max_root(depth : int, board : chess.Board, is_maximizing : bool) -> (chess.Move,float) :
     possible_moves = board.legal_moves
     best_move = -1
     second_best = -1
@@ -22,12 +21,12 @@ def min_max_root(depth : int, board : chess.Board, is_maximizing : bool) -> ches
             second_best = best_move
             best_move = value
             best_move_final = move
-    return best_move_final
+    return best_move_final,best_move
 
 @typechecked
 def min_max(depth : int, board : chess.Board, is_maximizing : bool, move : chess.Move) -> float:
     if depth == 0 :
-        return -evaluate_board_state(board, str(move))
+        return -evaluation.evaluate_board_state(board, str(move),[evaluation.PAWN_ADVANCE_STRATEGY])
     possible_moves = board.legal_moves
     if is_maximizing :
         best_move = -1
