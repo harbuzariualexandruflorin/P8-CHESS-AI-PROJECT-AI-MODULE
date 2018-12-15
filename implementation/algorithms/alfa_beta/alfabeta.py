@@ -21,7 +21,7 @@ def alpha_beta_root(depth: int, board: chess.Board, is_maximizing: bool) -> ches
             best_move       = value
             best_move_final = move
 
-    return best_move_final
+    return best_move_final,best_move
 
 
 @typechecked
