@@ -5,7 +5,7 @@ import  utils.chess_utils as evaluation
 from typeguard import typechecked
 
 @typechecked
-def negamax_root(depth : int, board : chess.Board, strategy : list) -> chess.Move :
+def negamax_root(depth : int, board : chess.Board, strategy : list) -> (chess.Move,float) :
     best_move_final = None
     possible_moves = board.legal_moves
     first_best = -1
@@ -22,7 +22,7 @@ def negamax_root(depth : int, board : chess.Board, strategy : list) -> chess.Mov
             second_best = first_best
             first_best = value
             best_move_final = move
-    return best_move_final
+    return best_move_final,first_best
 
 @typechecked
 def negamax(depth : int, board : chess.Board, move : chess.Move, strategy : list) -> float:

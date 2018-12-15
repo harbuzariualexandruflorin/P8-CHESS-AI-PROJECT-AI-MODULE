@@ -5,7 +5,7 @@ from typeguard import typechecked
 import utils.chess_utils as chess_functions
 
 @typechecked
-def min_max_root(depth : int, board : chess.Board, is_maximizing : bool, strategy : list) -> chess.Move :
+def min_max_root(depth : int, board : chess.Board, is_maximizing : bool, strategy : list) -> (chess.Move,float) :
     possible_moves = board.legal_moves
     best_move = -1
     second_best = -1
@@ -22,7 +22,7 @@ def min_max_root(depth : int, board : chess.Board, is_maximizing : bool, strateg
             second_best = best_move
             best_move = value
             best_move_final = move
-    return best_move_final
+    return best_move_final,best_move
 
 @typechecked
 def min_max(depth : int, board : chess.Board, is_maximizing : bool, move : chess.Move, strategy : list) -> float:

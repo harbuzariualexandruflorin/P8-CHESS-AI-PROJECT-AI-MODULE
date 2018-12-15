@@ -84,7 +84,7 @@ def game_strategy(strategy_name : str) -> list :
         return [chess_functions.KEEP_PIECES_STRATEGY]
 
 @typechecked
-def game_algorithm(algorithm_name : str, depth : int, board : chess.Board, is_maximizing : bool, strategy : str) -> chess.Move :
+def game_algorithm(algorithm_name : str, depth : int, board : chess.Board, is_maximizing : bool, strategy : str) -> (chess.Move,float) :
     if algorithm_name == 'MinMax' :
         return min_max_algorithm(depth, board, is_maximizing, game_strategy(strategy))
     if algorithm_name == 'NegaMax' :
@@ -106,8 +106,9 @@ def possible_variants(initial_state_FEN : str) -> None :
         while n != 2 :
             if board.turn :
                 n += 1
-                move = game_algorithm(algorithm, 1, board, True, strategy)
-                score = chess_functions.evaluate_board_state(board, str(move), game_strategy(strategy))
+                move = game_algorithm(algorithm, 1, board, True, strategy)[0]
+                score =  game_algorithm(algorithm, 1, board, True, strategy)[1]
+                # score = chess_functions.evaluate_board_state(board, str(move), game_strategy(strategy))
                 information_move = create_json_information_moves('w'+str(move), score)
                 add_moves(list_moves, variants, [information_move])
                 #print("You are advised to do this move",move)
@@ -117,8 +118,9 @@ def possible_variants(initial_state_FEN : str) -> None :
             else :
                 n += 1
                 #print("Computer's Turn:")
-                move = game_algorithm(algorithm, 1, board, True, strategy)
-                score = chess_functions.evaluate_board_state(board, str(move), game_strategy(strategy))
+                move = game_algorithm(algorithm, 1, board, True, strategy)[0]
+                score =  game_algorithm(algorithm, 1, board, True, strategy)[1]
+                # score = chess_functions.evaluate_board_state(board, str(move), game_strategy(strategy))
                 information_move = create_json_information_moves('b'+str(move), score)
                 list_moves[-1]['moves'].append(information_move)
                 move = chess.Move.from_uci(str(move))
@@ -140,8 +142,8 @@ def play() -> None :
     while not board.is_game_over() :
         if board.turn :
             n += 1
-            move = min_max_algorithm(1, board, True, [chess_functions.PAWN_ADVANCE_STRATEGY])
-            score = chess_functions.evaluate_board_state(board, str(move), [chess_functions.PAWN_ADVANCE_STRATEGY])
+            move,score = min_max_algorithm(1, board, True, [chess_functions.PAWN_ADVANCE_STRATEGY])
+            # score = chess_functions.evaluate_board_state(board, str(move), [chess_functions.PAWN_ADVANCE_STRATEGY])
             print(score)
             list_all_scores.append(score)
             print("You are advised to do this move",move)
@@ -152,8 +154,8 @@ def play() -> None :
         else :
             n += 1
             print("Computer's Turn:")
-            move = min_max_algorithm(1, board, True, [chess_functions.PAWN_ADVANCE_STRATEGY])
-            score = chess_functions.evaluate_board_state(board, str(move), [chess_functions.PAWN_ADVANCE_STRATEGY])
+            move,score = min_max_algorithm(1, board, True, [chess_functions.PAWN_ADVANCE_STRATEGY])
+            # score = chess_functions.evaluate_board_state(board, str(move), [chess_functions.PAWN_ADVANCE_STRATEGY])
             print(score)
             list_all_scores.append(score)
             move = chess.Move.from_uci(str(move))
@@ -195,8 +197,8 @@ def possible_moves_instead_of_wrong_move(move_number_n : int ,initial_state_FEN 
         while n != 2 :
             if not board.turn :
                 n += 1
-                move = game_algorithm(algorithm, 1, board, True, strategy)
-                score = chess_functions.evaluate_board_state(board, str(move), game_strategy(strategy))
+                move,score = game_algorithm(algorithm, 1, board, True, strategy)
+                # score = chess_functions.evaluate_board_state(board, str(move), game_strategy(strategy))
                 print(move, score)
                 information_move = create_json_information_moves(first_color_piece+str(move), score)
                 print(information_move)
@@ -208,8 +210,8 @@ def possible_moves_instead_of_wrong_move(move_number_n : int ,initial_state_FEN 
             else :
                 n += 1
                 #print("Computer's Turn:")
-                move = game_algorithm(algorithm, 1, board, True, strategy)
-                score = chess_functions.evaluate_board_state(board, str(move), game_strategy(strategy))
+                move,score = game_algorithm(algorithm, 1, board, True, strategy)
+                # score = chess_functions.evaluate_board_state(board, str(move), game_strategy(strategy))
                 information_move = create_json_information_moves(second_color_piece+str(move), score)
                 list_moves[-1]['moves'].append(information_move)
                 move = chess.Move.from_uci(str(move))
@@ -222,7 +224,7 @@ def possible_moves_instead_of_wrong_move(move_number_n : int ,initial_state_FEN 
     create_json_output(json_main_part)
 
 if __name__ == "__main__" :
-    #possible_variants("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
-    play()
-    possible_moves_instead_of_wrong_move(2,"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",get_board(2,"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"))
+    possible_variants("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    #play()
+    #possible_moves_instead_of_wrong_move(2,"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",get_board(2,"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"))
     #print(get_board(2,"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"))
