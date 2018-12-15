@@ -1,0 +1,115 @@
+{
+    "initialStateFEN": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "mainVariant": {
+        "moves": [
+            {
+                "move": "wg8h6",
+                "score": 0.0,
+                "variants": [
+                    {
+                        "moves": [
+                            {
+                                "move": "wg8h6",
+                                "score": 0.0
+                            },
+                            {
+                                "move": "bh3g5",
+                                "score": 0.0
+                            }
+                        ],
+                        "algorithmName": "MinMax",
+                        "strategyNames": [
+                            "PAWN_ADVANCE_STRATEGY"
+                        ]
+                    },
+                    {
+                        "moves": [
+                            {
+                                "move": "wh8g8",
+                                "score": 0.0
+                            },
+                            {
+                                "move": "bg5h7",
+                                "score": 0.018181818181818188
+                            }
+                        ],
+                        "algorithmName": "NegaMax",
+                        "strategyNames": [
+                            "PAWN_ADVANCE_STRATEGY"
+                        ]
+                    },
+                    {
+                        "moves": [
+                            {
+                                "move": "wg8h8",
+                                "score": -0.018181818181818188
+                            },
+                            {
+                                "move": "bh7f8",
+                                "score": 0.018181818181818188
+                            }
+                        ],
+                        "algorithmName": "AlfaBeta",
+                        "strategyNames": [
+                            "PAWN_ADVANCE_STRATEGY"
+                        ]
+                    }
+                ]
+            },
+            {
+                "move": "bh3g5",
+                "score": 0.0,
+                "variants": [
+                    {
+                        "moves": [
+                            {
+                                "move": "wg8h6",
+                                "score": 0.0
+                            },
+                            {
+                                "move": "bh3g5",
+                                "score": 0.0
+                            }
+                        ],
+                        "algorithmName": "MinMax",
+                        "strategyNames": [
+                            "PAWN_ADVANCE_STRATEGY"
+                        ]
+                    },
+                    {
+                        "moves": [
+                            {
+                                "move": "wh8g8",
+                                "score": 0.0
+                            },
+                            {
+                                "move": "bg5h7",
+                                "score": 0.018181818181818188
+                            }
+                        ],
+                        "algorithmName": "NegaMax",
+                        "strategyNames": [
+                            "PAWN_ADVANCE_STRATEGY"
+                        ]
+                    },
+                    {
+                        "moves": [
+                            {
+                                "move": "wg8h8",
+                                "score": -0.018181818181818188
+                            },
+                            {
+                                "move": "bh7f8",
+                                "score": 0.018181818181818188
+                            }
+                        ],
+                        "algorithmName": "AlfaBeta",
+                        "strategyNames": [
+                            "PAWN_ADVANCE_STRATEGY"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
