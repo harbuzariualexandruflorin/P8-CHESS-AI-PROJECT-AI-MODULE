@@ -17,7 +17,7 @@ def alpha_beta_root(depth : int, board : chess.Board, is_maximizing : bool) -> (
         if value > best_move :
             best_move = value
             best_move_final = move
-    return best_move_final,value
+    return best_move_final,best_move
 
 @typechecked
 def alpha_beta(depth : int, board : chess.Board, alpha : int, beta : int, is_maximizing : bool, move : chess.Move) -> float:
