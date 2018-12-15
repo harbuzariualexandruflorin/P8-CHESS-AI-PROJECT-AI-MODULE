@@ -2,31 +2,40 @@ import implementation.algorithms.tree.tree as tree
 
 from typeguard import typechecked
 
+
 @typechecked
-def t_negamax(root : tree.TreeNode) -> str:
+def t_negamax(root: tree.TreeNode) -> str:
     result_node = t_negamax_recursive(root, 1)
     parent_node = result_node
     parent_test = parent_node.parent
+
     while parent_test.parent:
         parent_node = parent_node.parent
-        parent_test=parent_test.parent
+        parent_test = parent_test.parent
+
     for key, value in root.children.items():
         if root.children[key] == parent_node:
             return key
 
+
 @typechecked
-def t_negamax_recursive(node : tree.TreeNode, point_of_view : int) -> tree.TreeNode:
+def t_negamax_recursive(node: tree.TreeNode, point_of_view: int) -> tree.TreeNode:
     if not node.children:
         return node
+
     max_eval = tree.TreeNode(value=-1)
+
     for key, value in node.children.items():
         eval_node = t_negamax_recursive(node.children[key], -point_of_view)
-        eval = point_of_view*eval_node.value
+        eval      = point_of_view*eval_node.value
+
         if max(max_eval.value, eval) != max_eval.value:
             max_eval = eval_node
+
     return max_eval
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
 
     root = tree.TreeNode()
     root.children['move_1'] = tree.TreeNode(parent=root)
