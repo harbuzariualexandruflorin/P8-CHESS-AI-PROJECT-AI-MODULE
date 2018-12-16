@@ -96,7 +96,7 @@ def generate_response_case2(fen : str, list : list) -> str:
     list_for_alfa=[]
     list_for_nega=[]
     for index in range (0, len(list)):
-        if index==bad_move[1]:
+        if index == bad_move[1]:
             board2=board.copy()
             for p in range(0,index-1):
                 board2.push_uci(list[p])
@@ -133,9 +133,10 @@ def generate_response_case2(fen : str, list : list) -> str:
     list_all_moves=[]
     list_all_variants = []
     list_strategies=[chess_functions.PAWN_ADVANCE_STRATEGY,chess_functions.DEFEND_PIECES_STRATEGY,chess_functions.TAKE_PIECES_STRATEGY,chess_functions.ATTACK_PIECES_STRATEGY,chess_functions.KEEP_PIECES_STRATEGY]
-    for move in list :
-        if move in bad_move :
+    for index_for2 in range(0,len(list)) :
+        if index_for2 == bad_move[1]-1:
             n = 0
+            color_pos = poz
             for algorithm in algorithms:
                 variants = output.create_json_variants(algorithm[0],[algorithm[2]])
                 n += 1
@@ -143,7 +144,7 @@ def generate_response_case2(fen : str, list : list) -> str:
                 for move_algorithm,score in algorithm[1]:
                     if color_pos%2==0:
                         m+=1
-                        information_move=output.create_json_information_moves(color[1-color_pos]+move_algorithm,score)
+                        information_move=output.create_json_information_moves(color[color_pos]+move_algorithm,score)
                         #print("Info White",information_move)
                         #                       output.add_variants(list_moves,variants,[information_move])
                         if m==1 :
@@ -153,7 +154,7 @@ def generate_response_case2(fen : str, list : list) -> str:
 
                     else:
                         m+=1
-                        information_move=output.create_json_information_moves(color[1-color_pos]+move_algorithm,score)
+                        information_move=output.create_json_information_moves(color[color_pos]+move_algorithm,score)
                         #list_moves[-1]['moves'].append(information_move)
                         if m==1 :
                             output.add_variants(list_moves, variants, [information_move])
@@ -166,12 +167,12 @@ def generate_response_case2(fen : str, list : list) -> str:
                 #print(list_all_variants)
                 if n == 3 :
                     d=output.create_json_moves(list_all_variants)
-                    list_all_moves.append(output.create_json_information_moves_with_variants(color[poz]+move,chess_functions.evaluate_board_state(board, move, list_strategies),list_moves))
+                    list_all_moves.append(output.create_json_information_moves_with_variants(color[poz]+list[index_for2],chess_functions.evaluate_board_state(board, list[index_for2], list_strategies),list_moves))
 
         else:
-            list_all_moves.append(output.create_json_information_moves(color[poz]+move,chess_functions.evaluate_board_state(board, move, list_strategies)))
+            list_all_moves.append(output.create_json_information_moves(color[poz]+list[index_for2],chess_functions.evaluate_board_state(board, list[index_for2], list_strategies)))
         poz=1-poz
-        board.push_uci(move)
+        board.push_uci(list[index_for2])
         #d2=output.create_json_information_moves_with_variants(second_move,second_score,list_moves)
     #print(list_all_moves)
     dictionary=output.create_json_moves(list_all_moves)
