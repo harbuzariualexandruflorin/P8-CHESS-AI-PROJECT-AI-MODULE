@@ -1,0 +1,125 @@
+{
+    "initialStateFEN": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "mainVariant": {
+        "moves": [
+            {
+                "move": "g1h3",
+                "score": 0.0
+            },
+            {
+                "move": "d7d6",
+                "score": -0.034545454545454546
+            },
+            {
+                "move": "b2b3",
+                "score": 0.034545454545454546
+            },
+            {
+                "move": "h7h6",
+                "score": -0.034545454545454546,
+                "variants": [
+                    {
+                        "moves": [
+                            {
+                                "move": "wg1h3",
+                                "score": -0.0
+                            },
+                            {
+                                "move": "bg8h6",
+                                "score": -0.0
+                            },
+                            {
+                                "move": "wh3g5",
+                                "score": -0.0
+                            },
+                            {
+                                "move": "bh8g8",
+                                "score": -0.0
+                            },
+                            {
+                                "move": "wg5h7",
+                                "score": 0.018181818181818188
+                            },
+                            {
+                                "move": "bg8h8",
+                                "score": -0.018181818181818188
+                            }
+                        ],
+                        "algorithmName": "MinMax",
+                        "strategyNames": [
+                            "PAWN_ADVANCE_STRATEGY"
+                        ]
+                    },
+                    {
+                        "moves": [
+                            {
+                                "move": "wd2d3",
+                                "score": 0
+                            },
+                            {
+                                "move": "bd7d6",
+                                "score": -0.02
+                            },
+                            {
+                                "move": "wc1g5",
+                                "score": 0.0
+                            },
+                            {
+                                "move": "bd8d7",
+                                "score": 0
+                            },
+                            {
+                                "move": "wg5e3",
+                                "score": 0.0
+                            },
+                            {
+                                "move": "bb8c6",
+                                "score": 0.0
+                            }
+                        ],
+                        "algorithmName": "NegaMax",
+                        "strategyNames": [
+                            "TAKE_PIECES_STRATEGY"
+                        ]
+                    },
+                    {
+                        "moves": [
+                            {
+                                "move": "wg1h3",
+                                "score": 0
+                            },
+                            {
+                                "move": "bg8h6",
+                                "score": 0
+                            },
+                            {
+                                "move": "wh3f4",
+                                "score": 0
+                            },
+                            {
+                                "move": "bg7g6",
+                                "score": 0.03636363636363636
+                            },
+                            {
+                                "move": "wf4h5",
+                                "score": 0
+                            },
+                            {
+                                "move": "bf7f6",
+                                "score": 0.01818181818181818
+                            }
+                        ],
+                        "algorithmName": "AlfaBeta",
+                        "strategyNames": [
+                            "DEFEND_PIECES_STRATEGY"
+                        ]
+                    }
+                ]
+            },
+            {
+                "move": "b3b4",
+                "score": 0.034545454545454546
+            }
+        ]
+    }
+}
