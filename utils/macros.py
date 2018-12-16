@@ -28,7 +28,7 @@ class Macros(Const):
     BOARD_CHECK_VALUE: float = 0.1
 
     BOARD_PIECE_TAKE_VALUE: float = 0.02
-    BOARD_INTERVAL_FIX = 55
+    BOARD_INTERVAL_FIX = 20
     PIECE_VALUES = {
         chess.PAWN: 1,
         chess.KNIGHT: 3,
