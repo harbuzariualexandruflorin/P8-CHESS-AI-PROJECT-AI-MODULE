@@ -14,6 +14,7 @@ from implementation.algorithms.alfa_beta.alfabeta import alpha_beta_root as alph
 from implementation.algorithms.minmax.minmax import min_max_root as minmax_algorithm
 import time
 from implementation.algorithms.tree.tree_gen import mistake_checker as mistake_move
+from implementation.output.json_file_to_string import json_file_to_string as convert_json_to_string
 
 @typechecked
 def main() -> None:
@@ -177,4 +178,6 @@ if __name__ == '__main__':
     move_list = ["g1h3", "d7d6", "b2b3", "h7h6", "b3b4"]
     fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     #generate_response_case1(fen,"w")
-    generate_response_case2(fen,move_list)
+    #generate_response_case2(fen,move_list)
+    #print(convert_json_to_string('output.json'))
+    print(convert_json_to_string('second_output.json'))
