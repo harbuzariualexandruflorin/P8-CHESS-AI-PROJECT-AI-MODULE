@@ -20,8 +20,8 @@ from implementation.output.json_file_to_string import json_file_to_string as con
 def main() -> None:
     start_api(Macros.SERVER_PORT)
 
-
-def generate_response_case1(fen,color ) -> None:
+@typechecked
+def generate_response_case1(fen : str, color : str) -> str:
     depth=1
     board=chess.Board(fen)
     negamax_board=board.copy()
@@ -88,8 +88,10 @@ def generate_response_case1(fen,color ) -> None:
                 # print(variants)
     json_main_part=output.create_json_main_body(fen,list_moves)
     output.create_json_output(json_main_part)
+    return convert_json_to_string('output.json')
 
-def generate_response_case2(fen,list):
+@typechecked
+def generate_response_case2(fen : str ,list : list) -> str:
     depth=1
     board=chess.Board(fen)
     bad_move=mistake_move(list.copy(),len(list)%2+1,0)
@@ -172,12 +174,13 @@ def generate_response_case2(fen,list):
     #dictionary={"moves":list_all_moves}
     json_main_part = output.create_second_json_main_body(fen, dictionary)
     output.create_json_output2(json_main_part)
+    return convert_json_to_string('second_output.json')
 
 if __name__ == '__main__':
     # main()
     move_list = ["g1h3", "d7d6", "b2b3", "h7h6", "b3b4"]
     fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-    #generate_response_case1(fen,"w")
-    #generate_response_case2(fen,move_list)
-    #print(convert_json_to_string('output.json'))
-    print(convert_json_to_string('second_output.json'))
+    #aici ai string-ul pt cazul 1 : primesti fen-ul si culoarea
+    print(generate_response_case1(fen,"w"))
+    #aici ai string-ul pt cazul 2 : primesti fen-ul si lista de mutari
+    print(generate_response_case2(fen,move_list))
