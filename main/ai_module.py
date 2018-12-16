@@ -183,4 +183,4 @@ if __name__ == '__main__':
     #aici ai string-ul pt cazul 1 : primesti fen-ul
     print(generate_response_case1(fen))
     #aici ai string-ul pt cazul 2 : primesti fen-ul si lista de mutari
-    print(generate_response_case2(fen,move_list))
+    #print(generate_response_case2(fen,move_list))
