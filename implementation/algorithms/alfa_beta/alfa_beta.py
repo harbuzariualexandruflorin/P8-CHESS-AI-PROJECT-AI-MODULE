@@ -5,7 +5,7 @@ import utils.chess_utils as evaluation
 
 import chess
 
-from typing import *
+
 from typeguard import typechecked
 
 

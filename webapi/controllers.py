@@ -1,36 +1,40 @@
 from flask_restful import Resource
-from werkzeug.utils import redirect
 from webapi.services import *
+from flask import request, jsonify
 from flask import Flask
 import json
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def home():
-    return redirect("/chess/1")
-
-
-class ChessController(Resource):
+class MoveAnalysisController(Resource):
 
     def __init__(self):
-        self.chess_service = ChessService()
+        self.chess_service = MoveAnalysisService()
 
-    def get(self, id):
-        test = self.chess_service.get_service()
-        test = id
+    def post(self):
+        state_fen = json.loads(request.data.decode())["fen"]
+        result = self.chess_service.move_analysis_service(state_fen)
+
         response = app.response_class(
-            response=json.dumps(test),
+            response=json.dumps(json.loads(result)),
             status=200,
             mimetype='application/json'
         )
         return response
 
-    def post(self, id):
-        test = self.chess_service.post_service()
+
+class MatchAnalysisController(Resource):
+
+    def __init__(self):
+        self.chess_service = MatchAnalysisService()
+
+    def post(self):
+        moves = json.loads(request.data.decode())["moves"]
+        result = self.chess_service.match_analysis_service(moves)
+
         response = app.response_class(
-            response=json.dumps(test),
+            response=json.dumps(json.loads(result)),
             status=200,
             mimetype='application/json'
         )
