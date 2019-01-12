@@ -85,6 +85,22 @@ def generate_response_case1(fen: str) -> str:
     output.create_json_output(json_main_part)
     return convert_json_to_string('output.json')
 
+def all_pieces_on_board(list_of_moves):
+    inital_fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    board1=chess.Board(inital_fen)
+    for move in list_of_moves:
+        board1.push_uci(move)
+        fen = str(board1.fen()).split(' ')
+        fen=fen[4]
+        if fen !='0':
+            return 0
+    fen=str(board1.fen()).split(' ')
+    fen=fen[0]
+    if(fen.count('p')==8 and fen.count('P')==8 and fen.count('r')==2 and fen.count('R')==2 and fen.count('b')==2 and fen.count('B')==2 and fen.count('n')==2
+            and fen.count('N') == 2 and fen.count('q')==1 and fen.count('Q')==1):
+        return 1
+    return 0
+
 
 @typechecked
 def generate_response_case2(fen : str, list : list) -> str:
@@ -95,8 +111,9 @@ def generate_response_case2(fen : str, list : list) -> str:
     list_for_min=[]
     list_for_alfa=[]
     list_for_nega=[]
+    check1=all_pieces_on_board(list.copy())
     for index in range (0, len(list)):
-        if index == bad_move[1]:
+        if index == bad_move[1] and check1==0 and bad_move[0]is not None:
             board2=board.copy()
             for p in range(0,index-1):
                 board2.push_uci(list[p])

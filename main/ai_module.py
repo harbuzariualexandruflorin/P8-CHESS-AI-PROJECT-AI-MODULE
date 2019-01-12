@@ -19,8 +19,8 @@ if __name__ == '__main__':
     #            'c5c6', 'e6e5', 'c6b7', 'c8b7', 'c7c8q', 'a8c8', 'g2b7', 'e7b7', 'd1d7', 'f8d7', 'b2b4', 'b7h1',
     #            'b4a5', 'h1g1', 'e1e2', 'g1h2', 'e2e1', 'h2h1', 'e1e2', 'h1h2', 'e2d3', 'd7c5', 'd3e3', 'h2g3', 'e3e2',
     #            'g3g2', 'e2e3', 'f6d5']
-    #fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    # fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     # #aici ai string-ul pt cazul 1 : primesti fen-ul
     # print(generate_response_case1(fen))
     # #aici ai string-ul pt cazul 2 : primesti fen-ul si lista de mutari
-    #print(generate_response_case2(fen,move_list))
+    # print(generate_response_case2(fen,move_list))
