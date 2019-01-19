@@ -21,6 +21,6 @@ def start_api(use_port: str) -> None:
     set_api_resources()
 
     try:
-        app.run(port=use_port)
+        app.run(port=use_port, threaded=True)
     except:
         logger().exception("Failed to start server")
